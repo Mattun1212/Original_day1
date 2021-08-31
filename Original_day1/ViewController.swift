@@ -47,12 +47,14 @@ class ViewController: UIViewController {
     @objc func validate() {
         let u1 = self.user1
         let u2 = self.user2
-        if u1?.count == 0 || u2?.count == 0 {
+        
+    
+        if u1?.count == 0 || u2?.count == 0 || u1 == nil || u2 == nil{
             self.confirmButton.isEnabled = false
-            print("false")
-        }
+        }else{
             self.confirmButton.isEnabled = true
-            print("true")
+        }
+
     }
     
     @IBAction func confirm(){
