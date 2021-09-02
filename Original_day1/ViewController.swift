@@ -58,10 +58,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction func confirm(){
-        users.append(user1!)
-        users.append(user2!)
-        users.append(user3!)
-        users.append(user4!)
+        users = []
+        users.append(user1 ?? "")
+        users.append(user2 ?? "")
+        users.append(user3 ?? "")
+        users.append(user4 ?? "")
         userArray = users.filter{!$0.isEmpty}
     }
     
