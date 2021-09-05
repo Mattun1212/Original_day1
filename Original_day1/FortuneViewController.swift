@@ -6,12 +6,15 @@
 //
 
 import UIKit
+import AVFoundation
+import Lottie
 
 class FortuneViewController: UIViewController {
         
-    @IBOutlet var bombImageView:UIImageView!
     @IBOutlet var userLabel:UILabel!
     
+    var animationView = AnimationView()
+    var seAudioPlayer: AVAudioPlayer?
     var stackV: UIStackView = UIStackView()
     var buttonArray: [UIButton] = []
     var stkArray: [UIStackView] = []
@@ -20,7 +23,7 @@ class FortuneViewController: UIViewController {
     var dobon:Int!
     var userArray = [String]()
     var count = 0
-    var index = 0
+    var index = 1
     let image = UIImage(named: "1061309")
     var X:Int!
     
@@ -37,38 +40,34 @@ class FortuneViewController: UIViewController {
         }
         rand()
         makeButtons()
+        addAnimationViewBomb()
         userLabel.text = userArray[count % userArray.count] + "の番"
     }
     
     @objc func makeButtons(){
-        mainView.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(mainView)
-        mainView.centerXAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerXAnchor).isActive = true
-       // mainView.centerYAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.centerYAnchor).isActive = true
-        //mainView.widthAnchor.constraint(equalTo: self.view.widthAnchor, multiplier: 0.9).isActive = true
-   //     mainView.heightAnchor.constraint(equalTo: mainView.widthAnchor, multiplier: 1.0).isActive = true
-        let leftConstraint = NSLayoutConstraint.init(item: mainView, attribute: .left, relatedBy: .equal, toItem: view, attribute: .left, multiplier: 1.0, constant: 15.0)
-        leftConstraint.isActive = true
-        let rightConstraint = NSLayoutConstraint.init(item: mainView, attribute: .right, relatedBy: .equal, toItem: view, attribute: .right, multiplier: 1.0, constant: 15.0)
-        rightConstraint.isActive = true
-        let bottomConstraint = NSLayoutConstraint.init(item: mainView, attribute: .bottom, relatedBy: .equal, toItem: view, attribute: .bottom, multiplier: 1.0, constant: 100.0)
-        bottomConstraint.isActive = true
-        mainView.heightAnchor.constraint(equalTo: mainView.widthAnchor, multiplier: 1.0).isActive = true
+        
         stackV.axis = .vertical
         stackV.alignment = .fill
-        stackV.distribution = .equalSpacing
+        stackV.distribution = .fillEqually
+        stackV.spacing = 4
         stackV.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(stackV)
-      //  stackV.centerXAnchor.constraint(equalTo: mainView.centerXAnchor).isActive = true
-        stackV.centerYAnchor.constraint(equalTo: mainView.centerYAnchor).isActive = true
-        stackV.widthAnchor.constraint(equalTo: mainView.widthAnchor, multiplier: 0.9).isActive = true
-        stackV.heightAnchor.constraint(equalTo: stackV.widthAnchor, multiplier: 0.1).isActive = true
+        stackV.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        stackV.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.8).isActive = true
+        stackV.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.4).isActive = true
+       // stackV.centerXAnchor.constraint(equalTo: mainView.centerXAnchor).isActive = true
+     //   stackV.centerYAnchor.constraint(equalTo: mainView.centerYAnchor).isActive = true
+       // stackV.widthAnchor.constraint(equalTo: mainView.widthAnchor, multiplier: 0.3).isActive = true
+        //stackV.heightAnchor.constraint(equalTo: stackV.widthAnchor, multiplier: 1).isActive = true
+        let bottom = stackV.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -80)
+        NSLayoutConstraint.activate([bottom])
         
         for _ in 0 ..< 2 {
             let stackH:UIStackView = UIStackView()
             stackH.axis = .horizontal
             stackH.alignment = .fill
-            stackH.distribution = .equalSpacing
+            
+            stackH.distribution = .fillEqually
             stkArray.append(stackH)
         }
         
@@ -79,7 +78,8 @@ class FortuneViewController: UIViewController {
         
         for _ in 0..<2*X{
             let btn: UIButton = UIButton(type: .custom)
-            btn.frame = CGRect(x: 0, y: 0, width: 70, height: 70)
+            btn.widthAnchor.constraint(equalToConstant: 100).isActive = true
+            btn.heightAnchor.constraint(equalToConstant: 100).isActive = true
             btn.tag = index
             index += 1
             btn.setImage(image, for: .normal)
@@ -87,12 +87,14 @@ class FortuneViewController: UIViewController {
             buttonArray.append(btn)
         }
         
-        for i in 0..<2*X{
+        let x =  2 * X
+    
+        for i in 0..<x{
             if X == 2{
                 switch i {
                     case 0..<2:
-                     stkArray[0].addArrangedSubview(buttonArray[i] as UIView)
-                    case 2..<4:
+                        stkArray[0].addArrangedSubview(buttonArray[i] as UIView)
+                    case 2...4:
                         stkArray[1].addArrangedSubview(buttonArray[i] as UIView)
                     default:
                         return
@@ -101,7 +103,7 @@ class FortuneViewController: UIViewController {
                 switch i {
                     case 0..<3:
                         stkArray[0].addArrangedSubview(buttonArray[i] as UIView)
-                    case 3..<6:
+                    case 3...6:
                         stkArray[1].addArrangedSubview(buttonArray[i] as UIView)
                     default:
                         return
@@ -110,7 +112,7 @@ class FortuneViewController: UIViewController {
                 switch i {
                     case 0..<4:
                         stkArray[0].addArrangedSubview(buttonArray[i] as UIView)
-                    case 4..<8:
+                    case 4...8:
                         stkArray[1].addArrangedSubview(buttonArray[i] as UIView)
                     default:
                         return
@@ -135,39 +137,97 @@ class FortuneViewController: UIViewController {
     @objc func buttonTapped(sender: UIButton) {
         sender.isEnabled = false
         count += 1
+        
+        playSE(fileName: "denden")
+        Thread.sleep(forTimeInterval: 3)
+        
         if sender.tag == dobon{
-            bombImageView.image = UIImage(named:"1537118")
+            playSE(fileName: "explode")
+            self.animationView.removeFromSuperview()
+            addAnimationViewExplode()
             count -= 1
             for button in buttonArray{
                 button.isEnabled = false
             }
+        }else{
+            playSE(fileName: "seikai")
         }
         userLabel.text = userArray[count % userArray.count] + "の番"
     }
     
     @objc func rand(){
         if userArray.count == 2{
-            dobon = Int.random(in: 0..<4)
+            dobon = Int.random(in: 1..<5)
         }else if userArray.count == 3{
-            dobon = Int.random(in: 0..<6)
+            dobon = Int.random(in: 1..<7)
         }else if  userArray.count == 4{
-            dobon = Int.random(in: 0..<8)
+            dobon = Int.random(in: 1..<9)
         }
     }
 
     @IBAction func reset(){
         count = 0
-        index = 0
+        index = 1
         rand()
         for button in buttonArray{
             button.isEnabled = true
         }
-        bombImageView.image = UIImage(named:"other_bomb01_01")
         userLabel.text = userArray[count % userArray.count] + "の番"
+        self.animationView.removeFromSuperview()
+        addAnimationViewBomb()
+        
     }
     
-    @IBAction func back(){
-      //  deleteButtons()
+    
+    func playSE(fileName: String) {
+        
+        // サウンドの初期化
+        guard let soundFilePath = Bundle.main.path(forResource: fileName, ofType: "mp3") else {
+            
+            assert(false, "ファイル名が間違っているので、読み込めません")
+        }
+        let fileURL = URL(fileURLWithPath: soundFilePath)
+        
+        do {
+            seAudioPlayer = try AVAudioPlayer(contentsOf: fileURL)
+            seAudioPlayer?.prepareToPlay()
+            seAudioPlayer?.play()
+        } catch let error {
+            assert(false, "サウンドの設定中にエラーが発生しました (\(error.localizedDescription))")
+        }
     }
     
+    func addAnimationViewBomb() {
+
+            //アニメーションファイルの指定
+            animationView = AnimationView(name: "3145-bomb")
+
+            //アニメーションの位置指定（画面中央）
+            animationView.frame = CGRect(x: 0, y: 100, width: view.frame.size.width, height: 400)
+
+            //アニメーションのアスペクト比を指定＆ループで開始
+            animationView.contentMode = .scaleAspectFit
+            animationView.loopMode = .loop
+            animationView.play()
+
+            //ViewControllerに配置
+            view.addSubview(animationView)
+        }
+    
+    func addAnimationViewExplode() {
+
+            //アニメーションファイルの指定
+            animationView = AnimationView(name: "16871-boom-trah")
+
+            //アニメーションの位置指定（画面中央）
+            animationView.frame = CGRect(x: 0, y: 150, width: view.frame.size.width, height: 350)
+
+            //アニメーションのアスペクト比を指定＆ループで開始
+            animationView.contentMode = .scaleAspectFit
+            animationView.loopMode = .loop
+            animationView.play()
+
+            //ViewControllerに配置
+            view.addSubview(animationView)
+        }
 }

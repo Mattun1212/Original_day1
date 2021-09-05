@@ -58,26 +58,30 @@
                                 </constraints>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ejH-lp-p5c">
-                                <rect key="frame" x="167" y="582" width="80" height="60"/>
+                                <rect key="frame" x="132" y="567" width="150" height="75"/>
+                                <color key="backgroundColor" systemColor="systemGray2Color"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="80" id="W54-Y2-01k"/>
-                                    <constraint firstAttribute="height" constant="60" id="hzi-rd-Xnj"/>
+                                    <constraint firstAttribute="width" constant="150" id="W54-Y2-01k"/>
+                                    <constraint firstAttribute="height" constant="75" id="hzi-rd-Xnj"/>
                                 </constraints>
-                                <state key="normal" title="決定"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                <state key="normal" title="決定">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
                                 <connections>
                                     <action selector="confirm" destination="DbS-BY-rzg" eventType="touchUpInside" id="OhY-Wt-lg9"/>
                                     <segue destination="BYZ-38-t0r" kind="presentation" id="H1Q-RM-PJr"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="プレイヤーを2人以上入力" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="857-cO-KYD">
-                                <rect key="frame" x="107" y="134" width="200.5" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <rect key="frame" x="31.5" y="134" width="351.5" height="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="jsP-1g-RHG"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="jsP-1g-RHG" firstAttribute="trailing" secondItem="Ghq-1a-lAJ" secondAttribute="trailing" constant="75" id="3gv-6h-bk9"/>
                             <constraint firstItem="jsP-1g-RHG" firstAttribute="bottom" secondItem="ejH-lp-p5c" secondAttribute="bottom" constant="220" id="771-de-JB4"/>
@@ -108,16 +112,9 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="の番" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ew8-io-0m4">
                                 <rect key="frame" x="167" y="100" width="80.5" height="48"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="40"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="other_bomb01_01" translatesAutoresizingMaskIntoConstraints="NO" id="zq5-rm-pbD">
-                                <rect key="frame" x="57" y="173" width="300" height="300"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="300" id="JBx-cG-N26"/>
-                                    <constraint firstAttribute="height" constant="300" id="gHe-yV-XQu"/>
-                                </constraints>
-                            </imageView>
                             <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sqV-LJ-m8c">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
@@ -139,16 +136,13 @@
                             </navigationBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.3333357871" green="0.33332890269999998" blue="0.33333355190000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         <constraints>
                             <constraint firstItem="ew8-io-0m4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="1TE-9h-eZP"/>
-                            <constraint firstItem="zq5-rm-pbD" firstAttribute="top" secondItem="ew8-io-0m4" secondAttribute="bottom" constant="25" id="82v-I1-SFv"/>
                             <constraint firstItem="ew8-io-0m4" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="100" id="P9T-3r-5GP"/>
-                            <constraint firstItem="zq5-rm-pbD" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="vEw-O1-FBW"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="bombImageView" destination="zq5-rm-pbD" id="Tz6-dr-fxQ"/>
                         <outlet property="userLabel" destination="ew8-io-0m4" id="3xG-cJ-soW"/>
                     </connections>
                 </viewController>
@@ -160,9 +154,8 @@
     </scenes>
     <resources>
         <image name="chevron.backward" catalog="system" width="96" height="128"/>
-        <image name="other_bomb01_01" width="800" height="800"/>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        <systemColor name="systemGray2Color">
+            <color red="0.68235294117647061" green="0.68235294117647061" blue="0.69803921568627447" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
